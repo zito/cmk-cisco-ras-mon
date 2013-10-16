@@ -1,0 +1,69 @@
+#!/usr/bin/python
+# -*- encoding: utf-8; py-indent-offset: 4 -*-
+#
+###############################################################################
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+###############################################################################
+
+
+# The check has been developed using
+#   Cisco ASA 5510
+#
+# +------------------------------------------------------------------+
+# | This file has been contributed by:                               |
+# |                                                                  |
+# | Václav Ovsík <vaclav.ovsik@gmail.com>             Copyright 2013 |
+# +------------------------------------------------------------------+
+
+# Example info:
+#  [['20']]
+#
+
+
+# Default remote active session levels (count)
+cisco_ras_mon_sess_default_levels = (150, 200)
+
+def inventory_cisco_ras_mon_sess(info):
+    if len(info[0]) != 1:
+        return
+    return [ (None, 'cisco_ras_mon_sess_default_levels') ]
+
+def check_cisco_ras_mon_sess(item, params, info):
+    sess = saveint(info[0][0])
+    status = 0
+    txt = 'Active sessions: %d' % sess
+    if params:
+        (warn, crit) = params
+    else:
+        warn = crit = None
+    if crit and sess >= crit:
+        txt += ' (!!) >=%d' % crit
+        status = max(status, 2)
+    elif warn and sess >= warn:
+        txt += ' (!) >=%d' % warn
+        status = max(status, 1)
+    return (status,
+            {0:'OK', 1:'WARN', 2:'CRIT'}[status] + ' - ' + txt,
+            (('sessions', sess, warn, crit),))
+
+
+check_info['cisco_ras_mon_sess'] = (check_cisco_ras_mon_sess, "Sessions",
+        1, inventory_cisco_ras_mon_sess)
+
+snmp_info['cisco_ras_mon_sess'] = ( '.1.3.6.1.4.1.9.9.392.1.3', [
+        '1',    # CISCO-REMOTE-ACCESS-MONITOR-MIB::crasNumSessions
+    ])
+
+snmp_scan_functions['cisco_ras_mon_sess'] = \
+        lambda oid: oid('.1.3.6.1.2.1.1.2.0').startswith('.1.3.6.1.4.1.9.1')

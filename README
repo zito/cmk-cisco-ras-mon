@@ -1,0 +1,28 @@
+   ____ _                 ____      _    ____    __  __             
+  / ___(_)___  ___ ___   |  _ \    / \  / ___|  |  \/  | ___  _ __  
+ | |   | / __|/ __/ _ \  | |_) |  / _ \ \___ \  | |\/| |/ _ \| '_ \ 
+ | |___| \__ \ (_| (_) | |  _ <  / ___ \ ___) | | |  | | (_) | | | |
+  \____|_|___/\___\___/  |_| \_\/_/   \_\____/  |_|  |_|\___/|_| |_|
+
+   Check-MK plugin for monitoring device with SNMP common entities
+   from Cisco Remote Access MIB. This plugin was developed using
+   Cisco Adaptive Security Appliance (ASA) 5510.
+
+   Copyright (C) 2013  Václav Ovsík <vaclav.ovsik@gmail.com>
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+---------------------------------------------------------------------------
+
+   For Check_MK see http://mathias-kettner.de/check_mk.html
