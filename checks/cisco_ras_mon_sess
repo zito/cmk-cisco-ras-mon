@@ -35,7 +35,7 @@
 cisco_ras_mon_sess_default_levels = (150, 200)
 
 def inventory_cisco_ras_mon_sess(info):
-    if len(info[0]) != 1:
+    if len(info) != 1 or len(info[0]) != 1:
         return
     return [ (None, 'cisco_ras_mon_sess_default_levels') ]
 
